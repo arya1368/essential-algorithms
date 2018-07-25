@@ -49,7 +49,7 @@ public class Chapter1 {
         int largest = array[0];                                         // O(1)
         for (int num : array) {                                         // O(n)
             if (num > largest) {                                        // O(1) * O(n)
-                LOG.info("{} is larger than {}", num , largest);        // O(1) * O(n)
+                LOG.info("{} is larger than {}", num , largest);
                 largest = num;                                          // O(1) * O(n)
             }
         }
@@ -77,12 +77,40 @@ public class Chapter1 {
         for (int i = 0; i < array.length; i++) {                            // O(n)
             for (int j = 0; j < array.length; j++)                          // O(n) * O(n)
                 if (i != j && array[i] == array[j]) {                       // O(1) * O(n) * O(n)
-                    LOG.info("{}(index {}) and {}(index {}) are equal"      // O(1) * O(n) * O(n)
+                    LOG.info("{}(index {}) and {}(index {}) are equal"
                             , array[i], i, array[j], j);
                     return true;                                            // O(1) * O(n) * O(n)
                 }
         }
         return false;                                                       // O(1)
         // O(n) + O(n.n) + O(n.n) + O(n.n) + O(1) = O(n + 3n.n + 1) ~ O(n.n)
+    }
+
+    /*
+    Boolean: ContainsDuplicates(Integer: array[])
+        // Loop over all of the array's items except the last one.
+        For i = 0 To <largest index> - 1
+            // Loop over the items after item i.
+            For j = i + 1 To <largest index>
+            // See if these two items are duplicates.
+                If (array[i] == array[j]) Then
+                    Return True
+                Next j
+            Next i
+        // If we get to this point, there are no duplicates.
+        Return False
+    End ContainsDuplicates
+     */
+    public static boolean isContainsDuplicatesV2(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) {                        // O(n - 1)
+            for (int j = i + 1; j < array.length; j++)                      // O(n - 1) * O(n - 1)
+                if (array[i] == array[j]) {                                 // O(n - 1) * O(n - 1) + O(1)
+                    LOG.info("{}(index {}) and {}(index {}) are equal"
+                            , array[i], i, array[j], j);
+                    return true;                                            // O(n - 1) * O(n - 1) + O(1)
+                }
+        }
+        return false;                                                       // O(1)
+        // O(n - 1) * O(n - 1) + O(1) = 2 * O(n - 1) + O(1) ~ O(n)
     }
 }

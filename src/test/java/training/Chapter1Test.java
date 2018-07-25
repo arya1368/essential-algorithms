@@ -2,12 +2,8 @@ package training;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.*;
-import static training.Chapter1.findLargest;
-import static training.Chapter1.greatestCommonDivisor;
-import static training.Chapter1.isContainsDuplicates;
+import static training.Chapter1.*;
 
 /**
  * @author Arya Pishgah (pishgah@gamelectronics.com) 23/07/2018
@@ -37,5 +33,13 @@ public class Chapter1Test {
         assertFalse(isContainsDuplicates(new int[] {1, -1 , 4}));
         assertTrue(isContainsDuplicates(new int[] {1, 3, 5, 6, 3}));
         assertTrue(isContainsDuplicates(new int[] {1, 1, 5, 6, 3}));
+    }
+
+    @Test
+    public void isContainsDuplicatesV2Facts() throws Exception {
+        assertFalse(isContainsDuplicatesV2(new int[] {1, 2 , 3}));
+        assertFalse(isContainsDuplicatesV2(new int[] {1, -1 , 4}));
+        assertTrue(isContainsDuplicatesV2(new int[] {1, 3, 5, 6, 3}));
+        assertTrue(isContainsDuplicatesV2(new int[] {1, 1, 5, 6, 3}));
     }
 }
