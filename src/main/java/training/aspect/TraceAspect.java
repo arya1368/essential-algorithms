@@ -33,13 +33,27 @@ public class TraceAspect {
     private String getMethodArguments(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         return Arrays.stream(args)
-                .map(Object::toString)
+                .map(obj -> {
+                    if (obj.getClass().isArray()) {
+                        if (obj.getClass().getComponentType().isPrimitive())
+                            return Arrays.toString((int[]) obj);
+
+                        return Arrays.toString((Object[]) obj);
+                    }
+                    return obj.toString();
+                })
                 .collect(Collectors.joining(", "));
     }
 
     private Object exitMethodTracing(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object returnVal = proceedingJoinPoint.proceed();
-        LOG.trace("return {}", returnVal);
+        if (returnVal != null)
+            LOG.trace("return {}", returnVal);
+        else {
+            String params = getMethodArguments(proceedingJoinPoint);
+            LOG.trace("given param after proceed is {}", params);
+        }
+
         return returnVal;
     }
 
