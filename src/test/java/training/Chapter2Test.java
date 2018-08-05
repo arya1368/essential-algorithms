@@ -60,8 +60,15 @@ public class Chapter2Test {
     @Test
     public void findPrimesFacts() throws Exception {
         assertEquals(Arrays.asList(2, 3, 5, 7), findPrimes(10));
+        assertEquals(Arrays.asList(2, 3, 5, 7, 11, 13), findPrimes(13));
         assertEquals(Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19), findPrimes(20));
         assertEquals(Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37), findPrimes(40));
         assertEquals(Arrays.asList(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59), findPrimes(60));
+    }
+
+    @Test
+    public void findPrimeFacts() throws Exception {
+        System.out.println(findPrime(1, 5));
+        System.out.println(findPrime(2, 5));
     }
 }

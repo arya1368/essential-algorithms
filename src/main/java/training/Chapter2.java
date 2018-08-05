@@ -72,6 +72,9 @@ public class Chapter2 {
         End RaiseToPower
      */
     public static float raiseToPower(float a, int p) {
+        if (p == 0)
+            return 1;
+
         float result = a;                       // 1
         int n = 1;                              // 1
         for (;n * 2 + 1 < p; n *= 2)            // log p
@@ -203,17 +206,56 @@ public class Chapter2 {
             for (int i = nextPrime * 2; i < maxNumber; i += nextPrime)
                 isComposite[i] = true;
 
-            for (nextPrime += 2; nextPrime <= maxNumber && isComposite[nextPrime]; nextPrime += 2) {
+            for (nextPrime += 2; nextPrime <= maxNumber && isComposite[nextPrime]; nextPrime += 2)
                 LOG.trace("jump {} we already crossed it from list.", nextPrime);
-            }
         }
 
         List<Integer> primes = new ArrayList<>();
-        for (int i = 2; i < maxNumber; i++) {
+        for (int i = 2; i < isComposite.length; i++) {
             if (!isComposite[i])
                 primes.add(i);
         }
         return primes;
         // O(n * log(log n))
+    }
+
+    /*
+     // Return true if the number p is (probably) prime.
+     Boolean: IsPrime(Integer: p, Integer: max_tests)
+         // Perform the test up to max_tests times.
+         For test = 1 To max_tests
+             <Pick a pseudorandom number n between 1 and p (exclusive)>
+             If (np-1 Mod p != 1) Then Return false
+         Next test
+         // The number is probably prime.
+         // (There is a 1/2 max_tests chance that it is not prime.)
+         Return true
+     End IsPrime
+     */
+    public static boolean isPrime(int num, int maxTests) {
+        for (int testCount = 0; testCount < maxTests; testCount++) {            // maxTests
+            int n = ThreadLocalRandom.current().nextInt(1, num);
+            if (Math.pow(n, num - 1) % num != 1)
+                return false;
+        }
+        return true;
+        // O(maxTest)
+    }
+
+    /*
+     // Return a (probable) prime with max_digits digits.
+     Integer: FindPrime(Integer: num_digits, Integer: max_tests)
+         Repeat
+             <Pick a pseudorandom number p with num_digits digits>
+             If (IsPrime(p, max_tests)) Then Return p
+     End FindPrime
+     */
+    public static int findPrime(int digits, int maxTest) {
+        while (true) {
+            int origin = (int) raiseToPower(10, digits - 1);
+            int p = ThreadLocalRandom.current().nextInt(origin, origin * 10);
+            if (isPrime(p, maxTest))
+                return p;
+        }
     }
 }
