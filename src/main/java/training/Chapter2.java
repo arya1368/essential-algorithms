@@ -74,17 +74,13 @@ public class Chapter2 {
     public static float raiseToPower(float a, int p) {
         if (p == 0)
             return 1;
-
-        float result = a;                       // 1
-        int n = 1;                              // 1
-        for (;n * 2 + 1 < p; n *= 2)            // log p
-            result *= result;                   // log p
-
-        int dif = p - n;                        // 1
-        if (dif > 0)                            // 1
-            result *= raiseToPower(a, dif);     // log dif
-
-        return result;                          // 1
+        if (p == 1)
+            return a;
+        if (p % 2 == 0) {
+            float raised = raiseToPower(a, p / 2);
+            return raised * raised;
+        }
+        return a * raiseToPower(a, p - 1);
         // log p + log dif ~ O(log p)
     }
 
@@ -110,7 +106,7 @@ public class Chapter2 {
      */
     public static List<Integer> findFactors(int num) {
         List<Integer> factors = new ArrayList<>();  // 1
-        for (int factor = 2; factor <= num;  factor++) {           // num
+        for (int factor = 2; factor <= num; factor++) {           // num
             for (; num % factor == 0; num /= factor)               // num * ?
                 factors.add(factor);
         }
@@ -154,7 +150,7 @@ public class Chapter2 {
             factors.add(2);                                                 // log num
 
         for (int factor = 3; factor <= sqrt(num); factor += 2) {       // sqrt num
-            for (;num % factor == 0; num /= factor)                         // sqrt num * ?
+            for (; num % factor == 0; num /= factor)                         // sqrt num * ?
                 factors.add(factor);                                        // sqrt num * ?
         }
 

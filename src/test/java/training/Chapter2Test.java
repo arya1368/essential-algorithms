@@ -70,5 +70,6 @@ public class Chapter2Test {
     public void findPrimeFacts() throws Exception {
         System.out.println(findPrime(1, 5));
         System.out.println(findPrime(2, 5));
+        System.out.println(findPrime(3, 3));
     }
 }
