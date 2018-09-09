@@ -9,18 +9,29 @@ public class DoublyLinkedList<T> {
         head = new Cell<>();
         tail = new Cell<>();
         head.next = tail;
+        head.type = "HEAD";
         tail.prev = head;
+        tail.type = "TAIL";
     }
 
     public boolean isEmpty() {
         return size == 0;
     }
 
-    public void add(T item) {
-        Cell<T> c = new Cell<>(item);
-        c.next = tail;
-        tail.prev.next = c;
-        tail.prev = c;
+    public void addFirst(T item) {
+        insertCell(head, new Cell<>(item));
+    }
+
+    public void addLast(T item) {
+        Cell<T> afterMe = tail.prev;
+        insertCell(afterMe, new Cell<>(item));
+    }
+
+    private void insertCell(Cell<T> afterMe, Cell<T> c) {
+        c.prev = afterMe;
+        c.next = afterMe.next;
+        afterMe.next.prev = c;
+        afterMe.next = c;
         size++;
     }
 
@@ -37,10 +48,20 @@ public class DoublyLinkedList<T> {
         return removed.value;
     }
 
+    @Override
+    public String toString() {
+        String str = "";
+        for (Cell cur = head.next; cur != null; cur = cur.next)
+            str += cur.value != null ? String.format("%s -> ", cur.value) : "";
+
+        return str.length() > 0 ? str.substring(0, str.length() - " -> ".length()) : str;
+    }
+
     private static class Cell<T> {
         T value;
         Cell<T> next;
         Cell<T> prev;
+        String type;
 
         public Cell() {
             this(null, null, null);

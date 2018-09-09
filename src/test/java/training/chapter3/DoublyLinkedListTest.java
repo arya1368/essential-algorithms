@@ -21,30 +21,40 @@ public class DoublyLinkedListTest {
     }
 
     @Test
-    public void addItemToList_increaseSize() {
-        linkedList.add(4);
+    public void addItemToLastItemInList_increaseSize() {
+        linkedList.addLast(4);
         assertEquals(1, linkedList.size());
         assertFalse(linkedList.isEmpty());
 
-        linkedList.add(5);
-        linkedList.add(8);
+        linkedList.addLast(5);
+        linkedList.addLast(8);
         assertEquals(3, linkedList.size());
     }
 
     @Test
     public void addOneTwoThree_popOneTwoThree() {
-        linkedList.add(1);
-        linkedList.add(2);
-        linkedList.add(3);
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        linkedList.addLast(3);
         assertEquals(new Integer(1), linkedList.pop());
         assertEquals(new Integer(2), linkedList.pop());
         assertEquals(new Integer(3), linkedList.pop());
     }
 
     @Test
+    public void addFirst_addingOneTwoThree_popThreeTwoOne() {
+        linkedList.addFirst(1);
+        linkedList.addFirst(2);
+        linkedList.addFirst(3);
+        assertEquals(new Integer(3), linkedList.pop());
+        assertEquals(new Integer(2), linkedList.pop());
+        assertEquals(new Integer(1), linkedList.pop());
+    }
+
+    @Test
     public void afterPop_sizeDecrease() {
-        linkedList.add(4);
-        linkedList.add(16);
+        linkedList.addLast(4);
+        linkedList.addLast(16);
         assertEquals(2, linkedList.size());
         linkedList.pop();
         assertEquals(1, linkedList.size());
