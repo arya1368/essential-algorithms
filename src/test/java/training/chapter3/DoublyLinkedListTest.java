@@ -61,4 +61,13 @@ public class DoublyLinkedListTest {
         linkedList.pop();
         assertTrue(linkedList.isEmpty());
     }
+
+    @Test
+    public void swapFacts() {
+        linkedList.addLast(1);
+        linkedList.addLast(2);
+        assertEquals("1 -> 2", linkedList.toString());
+        linkedList.swap(0, 1);
+        assertEquals("2 -> 1", linkedList.toString());
+    }
 }

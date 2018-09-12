@@ -35,17 +35,35 @@ public class DoublyLinkedList<T> {
         size++;
     }
 
-    public int size() {
-        return size;
-    }
-
-
     public T pop() {
         Cell<T> removed = head.next;
         head.next = removed.next;
         removed.next.prev = head;
         size--;
         return removed.value;
+    }
+
+    public void swap(int i, int j) {
+        Cell<T> cellJ = head.next;
+        Cell<T> cellI = head.next;
+        Cell<T> cur = head.next;
+
+        for (int counter = 0; counter < size; counter++) {
+            if (counter == i)
+                cellI = cur;
+            if (counter == j)
+                cellJ = cur;
+
+            cur = cur.next;
+        }
+
+        T temp = cellI.value;
+        cellI.value = cellJ.value;
+        cellJ.value = temp;
+    }
+
+    public int size() {
+        return size;
     }
 
     @Override
